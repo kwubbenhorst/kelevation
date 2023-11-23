@@ -11,6 +11,10 @@ var accordionHeaderEls = document.querySelectorAll(".accordion-header");
 var accordionBodyEls = document.querySelectorAll('.accordion-body');
 var accordionBodyEl;
 var accordionHeaderEl;
+var listGroupDishNameEls = document.querySelectorAll(".dish-name");
+var listGroupRestaurantNameEls = document.querySelectorAll(".restaurant-name");
+var listGroupDishNameEl;
+var listGroupRestaurantNameEl;
 var selectedRecipe;
 var allRecipeDetails = JSON.parse(localStorage.getItem("recipeinfo"));
 var allReturnedRecipes = JSON.parse(localStorage.getItem("recipes"));
@@ -185,9 +189,33 @@ function renderRecipeDetails(allRecipeDetails) {
   //});
 }
 
+function renderMenuItems(allMenuItems) {
+  console.log("Rendering menu items");
+
+  // Iterate through each list group section
+  for (var i = 0; i < listGroupDishNameEls.length; i++) {
+      var menuItem = allMenuItems[i];
+
+      listGroupDishNameEl = listGroupDishNameEls[i];
+      listGroupRestaurantNameEl = listGroupRestaurantNameEls[i];
+
+      // Check if there is a corresponding menuItem
+      if (i < allMenuItems.length) {
+          // Populate list group with the title and restaurantChain
+          listGroupDishNameEl.querySelector('h5').textContent = menuItem.title;
+          listGroupRestaurantNameEl.querySelector('p').textContent = menuItem.restaurant;
+      } else {
+          // If there's no corresponding menuItem, clear the listGroupDishName and RestaurantChain
+          listGroupDishNameEls[i].querySelector('h5').textContent = '';
+          listGroupRestaurantNameEls[i].querySelector('p').textContent = '';
+      }
+  }
+
+  console.log("Menu items rendered successfully");
+}
+
+renderMenuItems(allMenuItems);
 renderRecipeDetails(allRecipeDetails);
-
-
 
 //HELPER FUNCTION FOR FUNCTION HANDLEFAVOURITING AND OTHERS  
 
